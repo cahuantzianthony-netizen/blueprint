@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Blueprint — Tony's $10M Roadmap</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --gold-dim: #7A6330;
+    --black: #0A0A0A;
+    --surface: #111111;
+    --surface2: #1A1A1A;
+    --border: rgba(201,168,76,0.15);
+    --border-bright: rgba(201,168,76,0.4);
+    --text: #E8E4DC;
+    --muted: #888880;
+    --green: #2ECC71;
+    --green-dim: #1A5C35;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar-track { background: var(--black); }
+  ::-webkit-scrollbar-thumb { background: var(--gold-dim); }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1.25rem 2.5rem;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 0.5px solid var(--border);
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(12px);
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+  }
+  .nav-right {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+  .target-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(201,168,76,0.08);
+    border: 0.5px solid var(--border-bright);
+    border-radius: 100px;
+    padding: 4px 12px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--gold);
+  }
+  .target-pill::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 8rem 2.5rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 80% 20%, rgba(201,168,76,0.06) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 10% 80%, rgba(201,168,76,0.04) 0%, transparent 70%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse at center, black 20%, transparent 80%);
+  }
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(72px, 12vw, 160px);
+    line-height: 0.9;
+    letter-spacing: 0.04em;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.4s forwards;
+  }
+  .hero-title span { color: var(--gold); }
+  .hero-sub {
+    max-width: 480px;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.6s forwards;
+  }
+  .hero-stats {
+    display: flex; gap: 2.5rem; flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.8s forwards;
+  }
+  .hero-stat { }
+  .hero-stat .num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    color: var(--gold);
+    letter-spacing: 0.04em;
+    display: block;
+  }
+  .hero-stat .lbl {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .hero-line {
+    position: absolute; bottom: 0; left: 2.5rem; right: 2.5rem;
+    height: 0.5px;
+    background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SECTION SHARED */
+  section { padding: 5rem 2.5rem; }
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    color: var(--gold-dim);
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 5vw, 64px);
+    letter-spacing: 0.06em;
+    color: var(--text);
+    margin-bottom: 3rem;
+    line-height: 1;
+  }
+
+  /* ECOSYSTEM */
+  .eco-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+  .eco-card {
+    background: var(--surface);
+    padding: 1.75rem 1.5rem;
+    position: relative;
+    transition: background 0.2s;
+    cursor: default;
+  }
+  .eco-card:hover { background: var(--surface2); }
+  .eco-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    color: rgba(201,168,76,0.12);
+    line-height: 1;
+    position: absolute;
+    top: 1rem; right: 1.25rem;
+    letter-spacing: 0.04em;
+  }
+  .eco-icon {
+    font-size: 22px;
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+  .eco-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 0.08em;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+  .eco-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .eco-feeds {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--gold-dim);
+    letter-spacing: 0.1em;
+    margin-top: 1rem;
+    text-transform: uppercase;
+  }
+  .eco-arrow { color: var(--gold); margin: 0 4px; }
+
+  /* FLOW DIAGRAM */
+  .flow-box {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+    padding: 1.5rem 2rem;
+    margin-bottom: 1px;
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+  .flow-box strong { color: var(--gold); font-weight: 500; }
+
+  /* PHASES */
+  .phases-wrap { display: flex; flex-direction: column; gap: 1px; }
+  .phase-card {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-left: 3px solid transparent;
+    border-radius: 4px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .phase-card.p1 { border-left-color: #5DCAA5; }
+  .phase-card.p2 { border-left-color: #7F77DD; }
+  .phase-card.p3 { border-left-color: #D85A30; }
+  .phase-card.p4 { border-left-color: #C9A84C; }
+  .phase-head {
+    padding: 1.25rem 1.5rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between;
+    user-select: none;
+  }
+  .phase-head:hover { background: var(--surface2); }
+  .phase-left { display: flex; align-items: center; gap: 12px; }
+  .phase-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  .phase-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 0.08em;
+    color: var(--text);
+  }
+  .phase-range {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--gold);
+    background: rgba(201,168,76,0.08);
+    border: 0.5px solid var(--border-bright);
+    border-radius: 100px;
+    padding: 3px 10px;
+  }
+  .phase-toggle {
+    font-size: 20px;
+    color: var(--muted);
+    transition: transform 0.2s;
+  }
+  .phase-toggle.open { transform: rotate(45deg); }
+  .phase-body {
+    display: none;
+    padding: 0 1.5rem 1.5rem;
+    border-top: 0.5px solid var(--border);
+  }
+  .phase-body.open { display: block; }
+  .phase-truth {
+    font-size: 13px;
+    color: var(--muted);
+    font-style: italic;
+    border-left: 2px solid var(--gold-dim);
+    padding-left: 12px;
+    margin: 1rem 0 1.25rem;
+    line-height: 1.7;
+  }
+  .vehicle-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+  .vehicle {
+    background: var(--black);
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+    padding: 1rem 1.1rem;
+  }
+  .v-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16px;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    margin-bottom: 8px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .v-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    background: rgba(201,168,76,0.1);
+    color: var(--gold-dim);
+    border-radius: 100px;
+    padding: 2px 7px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 400;
+  }
+  .v-steps { list-style: none; }
+  .v-step {
+    display: flex; gap: 8px; align-items: flex-start;
+    padding: 5px 0;
+    border-bottom: 0.5px solid rgba(255,255,255,0.04);
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .v-step:last-child { border-bottom: none; }
+  .v-step:hover .step-txt { color: var(--text); }
+  .v-chk {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    border: 1px solid var(--gold-dim);
+    flex-shrink: 0;
+    margin-top: 3px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+  }
+  .v-chk.on {
+    background: var(--green);
+    border-color: var(--green);
+  }
+  .v-chk.on::after {
+    content: '';
+    width: 4px; height: 7px;
+    border: 1.5px solid #fff;
+    border-top: none; border-left: none;
+    transform: rotate(45deg) translate(-1px,-1px);
+    display: block;
+  }
+  .step-txt {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.5;
+    transition: color 0.2s;
+  }
+  .v-step.done .step-txt { text-decoration: line-through; opacity: 0.4; }
+
+  /* PROGRESS */
+  .progress-section {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+    padding: 1.5rem 2rem;
+    margin-bottom: 3rem;
+  }
+  .progress-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .progress-lbl { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.08em; }
+  .progress-pct { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--gold); letter-spacing: 0.04em; }
+  .progress-bar { height: 3px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--gold-dim), var(--gold)); border-radius: 2px; transition: width 0.4s; }
+
+  /* FUNNEL FLOW */
+  .funnel-section {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+    padding: 2rem;
+    margin-top: 1rem;
+  }
+  .funnel-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 0;
+    border-bottom: 0.5px solid rgba(255,255,255,0.04);
+  }
+  .funnel-row:last-child { border-bottom: none; }
+  .f-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 100px;
+    flex-shrink: 0;
+    width: 100px; text-align: center;
+  }
+  .f-arrow { color: var(--gold-dim); font-size: 12px; flex-shrink: 0; }
+  .f-text { font-size: 12px; color: var(--muted); }
+  .f-text strong { color: var(--gold); font-weight: 500; }
+
+  /* FOOTER */
+  footer {
+    border-top: 0.5px solid var(--border);
+    padding: 2rem 2.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.12em;
+    color: var(--gold-dim);
+  }
+  .footer-txt {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+
+  /* DIVIDER */
+  .divider {
+    height: 0.5px;
+    background: linear-gradient(90deg, transparent, var(--border-bright), transparent);
+    margin: 0 2.5rem;
+  }
+
+  /* JOURNAL */
+  .journal-section { padding: 5rem 2.5rem; }
+  .journal-tabs { display: flex; gap: 0; margin-bottom: 2rem; border: 0.5px solid var(--border); border-radius: 4px; overflow: hidden; }
+  .j-tab {
+    flex: 1; padding: 10px 16px; text-align: center; cursor: pointer;
+    font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--muted); background: var(--surface);
+    border-right: 0.5px solid var(--border); transition: all 0.2s;
+  }
+  .j-tab:last-child { border-right: none; }
+  .j-tab.active { background: rgba(201,168,76,0.1); color: var(--gold); }
+  .j-tab:hover:not(.active) { background: var(--surface2); }
+  .j-panel { display: none; }
+  .j-panel.active { display: block; }
+  .journal-card {
+    background: var(--surface); border: 0.5px solid var(--border);
+    border-radius: 4px; padding: 2rem; margin-bottom: 1px;
+  }
+  .j-date-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 1.5rem; padding-bottom: 1rem;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .j-date-label { font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 0.08em; color: var(--gold); }
+  .j-streak { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
+  .j-streak span { color: var(--gold); font-size: 14px; }
+  .j-question-block { margin-bottom: 1.5rem; }
+  .j-question {
+    font-family: 'DM Mono', monospace; font-size: 11px;
+    letter-spacing: 0.08em; color: var(--gold-dim); text-transform: uppercase;
+    margin-bottom: 8px; display: flex; align-items: center; gap: 8px;
+  }
+  .j-q-num {
+    width: 20px; height: 20px; border-radius: 50%;
+    background: rgba(201,168,76,0.1); border: 0.5px solid var(--border-bright);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 10px; color: var(--gold); flex-shrink: 0;
+  }
+  .j-textarea {
+    width: 100%; background: var(--black); border: 0.5px solid var(--border);
+    border-radius: 4px; padding: 12px 14px; color: var(--text);
+    font-family: 'DM Sans', sans-serif; font-size: 14px; line-height: 1.7;
+    resize: vertical; min-height: 80px; transition: border-color 0.2s;
+    outline: none;
+  }
+  .j-textarea:focus { border-color: var(--gold-dim); }
+  .j-textarea::placeholder { color: rgba(136,136,128,0.4); font-style: italic; }
+  .j-mantra-block {
+    background: linear-gradient(135deg, rgba(201,168,76,0.06), rgba(201,168,76,0.02));
+    border: 0.5px solid var(--border-bright); border-radius: 4px;
+    padding: 1.5rem; margin-bottom: 1.5rem;
+  }
+  .j-mantra-title {
+    font-family: 'Bebas Neue', sans-serif; font-size: 18px;
+    letter-spacing: 0.1em; color: var(--gold); margin-bottom: 1rem;
+  }
+  .j-mantra-prompts { display: flex; flex-direction: column; gap: 8px; }
+  .j-mantra-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 13px; color: var(--muted); line-height: 1.6;
+  }
+  .j-mantra-dot { color: var(--gold); flex-shrink: 0; margin-top: 2px; }
+  .j-save-row { display: flex; gap: 10px; align-items: center; justify-content: space-between; }
+  .j-save-btn {
+    background: rgba(201,168,76,0.1); border: 0.5px solid var(--border-bright);
+    color: var(--gold); font-family: 'Bebas Neue', sans-serif;
+    font-size: 16px; letter-spacing: 0.12em; padding: 10px 28px;
+    border-radius: 4px; cursor: pointer; transition: all 0.2s;
+  }
+  .j-save-btn:hover { background: rgba(201,168,76,0.18); }
+  .j-save-btn:active { transform: scale(0.98); }
+  .j-saved-msg { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--green); letter-spacing: 0.08em; opacity: 0; transition: opacity 0.3s; }
+  .j-saved-msg.show { opacity: 1; }
+  .j-mood-row { display: flex; gap: 8px; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .j-mood-btn {
+    padding: 6px 14px; border-radius: 100px; cursor: pointer;
+    font-size: 13px; border: 0.5px solid var(--border);
+    background: var(--black); color: var(--muted); transition: all 0.15s;
+  }
+  .j-mood-btn.selected { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.08); }
+  /* PAST ENTRIES */
+  .j-entries { display: flex; flex-direction: column; gap: 12px; }
+  .j-entry-card {
+    background: var(--surface); border: 0.5px solid var(--border);
+    border-radius: 4px; padding: 1.25rem 1.5rem; cursor: pointer; transition: background 0.2s;
+  }
+  .j-entry-card:hover { background: var(--surface2); }
+  .j-entry-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .j-entry-date { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 0.08em; color: var(--gold); }
+  .j-entry-mood { font-size: 13px; color: var(--muted); }
+  .j-entry-preview { font-size: 13px; color: var(--muted); line-height: 1.6; }
+  .j-empty { text-align: center; padding: 3rem; color: var(--muted); font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 0.08em; }
+  /* MANIFESTATION */
+  .manifest-card {
+    background: linear-gradient(135deg, rgba(201,168,76,0.05), var(--surface));
+    border: 0.5px solid var(--border-bright); border-radius: 4px;
+    padding: 2rem; margin-bottom: 1.5rem;
+  }
+  .manifest-title { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 0.1em; color: var(--gold); margin-bottom: 0.5rem; }
+  .manifest-sub { font-size: 13px; color: var(--muted); margin-bottom: 1.5rem; line-height: 1.7; }
+  .manifest-affirmations { display: flex; flex-direction: column; gap: 10px; }
+  .manifest-item { display: flex; gap: 10px; align-items: flex-start; }
+  .manifest-num { font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: rgba(201,168,76,0.3); flex-shrink: 0; line-height: 1; margin-top: 2px; }
+  .manifest-input {
+    flex: 1; background: var(--black); border: 0.5px solid var(--border);
+    border-radius: 4px; padding: 10px 12px; color: var(--text);
+    font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none;
+    transition: border-color 0.2s;
+  }
+  .manifest-input:focus { border-color: var(--gold-dim); }
+  .manifest-input::placeholder { color: rgba(136,136,128,0.35); font-style: italic; }
+  .j-cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 1.5rem; }
+  .j-cal-day {
+    aspect-ratio: 1; border-radius: 3px; background: var(--surface);
+    border: 0.5px solid var(--border); display: flex; align-items: center;
+    justify-content: center; font-family: 'DM Mono', monospace; font-size: 9px;
+    color: var(--muted); cursor: default;
+  }
+  .j-cal-day.has-entry { background: rgba(201,168,76,0.15); border-color: var(--gold-dim); color: var(--gold); }
+  .j-cal-day.today { border-color: var(--gold); color: var(--gold); }
+  .j-cal-label { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); text-align: center; margin-bottom: 8px; letter-spacing: 0.05em; }
+
+  /* QUOTE */
+  .big-quote {
+    padding: 5rem 2.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .big-quote::before {
+    content: '"';
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 400px;
+    color: rgba(201,168,76,0.03);
+    position: absolute;
+    top: -80px; left: 50%;
+    transform: translateX(-50%);
+    line-height: 1;
+    pointer-events: none;
+  }
+  .big-quote p {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(28px, 4vw, 52px);
+    letter-spacing: 0.04em;
+    color: var(--text);
+    max-width: 800px;
+    margin: 0 auto 1rem;
+    line-height: 1.2;
+  }
+  .big-quote span {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--gold-dim);
+    letter-spacing: 0.1em;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">The Blueprint</div>
+  <div style="display:flex;align-items:center;gap:16px;">
+    <div class="target-pill">$10M before 30</div>
+    <div class="nav-right">Tony · Est. 2025</div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-eyebrow">The $10M Wealth Attack Plan</div>
+  <h1 class="hero-title">THE<br><span>BLUE</span><br>PRINT</h1>
+  <p class="hero-sub">Not a dream. Not a wish. A structured, executable roadmap from sophomore year to $10 million liquid — before 30.</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><span class="num">5</span><span class="lbl">Wealth Vehicles</span></div>
+    <div class="hero-stat"><span class="num">4</span><span class="lbl">Phases</span></div>
+    <div class="hero-stat"><span class="num">~13</span><span class="lbl">Years to Execute</span></div>
+    <div class="hero-stat"><span class="num">$10M</span><span class="lbl">Liquid Target</span></div>
+  </div>
+  <div class="hero-line"></div>
+</div>
+
+<!-- QUOTE -->
+<div class="big-quote">
+  <p>The people who make it aren't the ones who had it easy. They're the ones who decided to change direction.</p>
+  <span>— The Blueprint · Tony's Principle #1</span>
+</div>
+
+<div class="divider"></div>
+
+<!-- ECOSYSTEM -->
+<section>
+  <div class="section-label">The 5 Vehicles</div>
+  <div class="section-title">The Ecosystem</div>
+
+  <div class="eco-grid">
+    <div class="eco-card">
+      <div class="eco-num">01</div>
+      <span class="eco-icon">📈</span>
+      <div class="eco-name">Trading</div>
+      <div class="eco-desc">Stocks, forex & crypto. The prop firm path gives you $100K+ capital access at 18 with no personal risk.</div>
+      <div class="eco-feeds">Feeds <span class="eco-arrow">→</span> Investing, Real Estate</div>
+    </div>
+    <div class="eco-card">
+      <div class="eco-num">02</div>
+      <span class="eco-icon">🏢</span>
+      <div class="eco-name">Marketing Agency</div>
+      <div class="eco-desc">SMMA generates $3K–$50K/month. Cash engine that funds every other vehicle in the ecosystem.</div>
+      <div class="eco-feeds">Feeds <span class="eco-arrow">→</span> All vehicles</div>
+    </div>
+    <div class="eco-card">
+      <div class="eco-num">03</div>
+      <span class="eco-icon">📱</span>
+      <div class="eco-name">Social Media</div>
+      <div class="eco-desc">Personal brand is the multiplier. Attracts clients, trading followers, speaking deals, and equity opportunities.</div>
+      <div class="eco-feeds">Feeds <span class="eco-arrow">→</span> Agency, Investing</div>
+    </div>
+    <div class="eco-card">
+      <div class="eco-num">04</div>
+      <span class="eco-icon">🏠</span>
+      <div class="eco-name">Real Estate</div>
+      <div class="eco-desc">Passive income engine. Start with house hacking at 21, scale to a $2M–$5M portfolio by 28.</div>
+      <div class="eco-feeds">Feeds <span class="eco-arrow">→</span> Passive cash flow</div>
+    </div>
+    <div class="eco-card">
+      <div class="eco-num">05</div>
+      <span class="eco-icon">💰</span>
+      <div class="eco-name">Investing</div>
+      <div class="eco-desc">Index funds, Roth IRA, and dividend assets running 24/7. Compound interest is the silent partner.</div>
+      <div class="eco-feeds">Feeds <span class="eco-arrow">→</span> Net worth growth</div>
+    </div>
+  </div>
+
+  <!-- How they connect -->
+  <div class="funnel-section">
+    <div class="section-label" style="margin-bottom:1rem;">How the ecosystem flows</div>
+    <div class="funnel-row">
+      <div class="f-tag" style="background:rgba(93,202,165,0.1);color:#5DCAA5;border:0.5px solid rgba(93,202,165,0.3);">Trading</div>
+      <div class="f-arrow">→</div>
+      <div class="f-text">Monthly profits are split: <strong>50% reinvested</strong> into the trading account, <strong>30% to index funds</strong>, <strong>20% to agency startup costs</strong></div>
+    </div>
+    <div class="funnel-row">
+      <div class="f-tag" style="background:rgba(127,119,221,0.1);color:#7F77DD;border:0.5px solid rgba(127,119,221,0.3);">Agency</div>
+      <div class="f-arrow">→</div>
+      <div class="f-text">Retainer income funds <strong>real estate down payments</strong> and <strong>larger investment positions</strong> — consistent cash regardless of market</div>
+    </div>
+    <div class="funnel-row">
+      <div class="f-tag" style="background:rgba(201,168,76,0.1);color:#C9A84C;border:0.5px solid rgba(201,168,76,0.3);">Brand</div>
+      <div class="f-arrow">→</div>
+      <div class="f-text">Social audience drives <strong>agency clients inbound</strong>, <strong>course sales</strong>, and <strong>partnership equity deals</strong> at scale</div>
+    </div>
+    <div class="funnel-row">
+      <div class="f-tag" style="background:rgba(216,90,48,0.1);color:#D85A30;border:0.5px solid rgba(216,90,48,0.3);">Real Estate</div>
+      <div class="f-arrow">→</div>
+      <div class="f-text">Cash flow from rentals <strong>covers personal expenses</strong> — meaning 100% of trading and agency income can be reinvested</div>
+    </div>
+    <div class="funnel-row">
+      <div class="f-tag" style="background:rgba(46,204,113,0.1);color:#2ECC71;border:0.5px solid rgba(46,204,113,0.3);">Investing</div>
+      <div class="f-arrow">→</div>
+      <div class="f-text">Portfolio at $1M+ generates <strong>$200K–$400K/year</strong> at 20–40% returns — passive income snowball running forever</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PHASES -->
+<section>
+  <div class="section-label">The Roadmap</div>
+  <div class="section-title">4 Phases to $10M</div>
+
+  <!-- PROGRESS -->
+  <div class="progress-section">
+    <div class="progress-row">
+      <div class="progress-lbl">Blueprint Progress</div>
+      <div class="progress-pct" id="pct">0%</div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="pfill" style="width:0%"></div></div>
+  </div>
+
+  <div class="phases-wrap" id="phases-wrap"></div>
+</section>
+
+<div class="divider"></div>
+
+<!-- JOURNAL -->
+<section class="journal-section">
+  <div class="section-label">Daily Practice</div>
+  <div class="section-title">The Journal</div>
+
+  <div class="journal-tabs">
+    <div class="j-tab active" onclick="switchTab('today')">Today's Entry</div>
+    <div class="j-tab" onclick="switchTab('past')">Past Entries</div>
+    <div class="j-tab" onclick="switchTab('manifest')">Manifestation</div>
+    <div class="j-tab" onclick="switchTab('calendar')">Streak Calendar</div>
+  </div>
+
+  <!-- TODAY -->
+  <div class="j-panel active" id="tab-today">
+    <div class="journal-card">
+      <div class="j-date-header">
+        <div class="j-date-label" id="today-date"></div>
+        <div class="j-streak">🔥 Streak: <span id="streak-count">0</span> days</div>
+      </div>
+
+      <div style="margin-bottom:1.5rem;">
+        <div class="j-question" style="margin-bottom:10px;"><div class="j-q-num">★</div> How are you showing up today?</div>
+        <div class="j-mood-row" id="mood-row">
+          <div class="j-mood-btn" onclick="selectMood(this,'🔥 Locked in')">🔥 Locked in</div>
+          <div class="j-mood-btn" onclick="selectMood(this,'💪 Motivated')">💪 Motivated</div>
+          <div class="j-mood-btn" onclick="selectMood(this,'😐 Neutral')">😐 Neutral</div>
+          <div class="j-mood-btn" onclick="selectMood(this,'😤 Off today')">😤 Off today</div>
+          <div class="j-mood-btn" onclick="selectMood(this,'🧠 Reflective')">🧠 Reflective</div>
+        </div>
+      </div>
+
+      <div class="j-question-block">
+        <div class="j-question"><div class="j-q-num">1</div> What is the one thing I did today that moved me closer to $10M?</div>
+        <textarea class="j-textarea" id="q1" placeholder="Be specific. A trade, a call made, content posted, a skill studied..."></textarea>
+      </div>
+      <div class="j-question-block">
+        <div class="j-question"><div class="j-q-num">2</div> Where did I waste time or energy today? What will I do differently?</div>
+        <textarea class="j-textarea" id="q2" placeholder="Be honest. This is only for you. No excuses — just truth."></textarea>
+      </div>
+      <div class="j-question-block">
+        <div class="j-question"><div class="j-q-num">3</div> What did I learn today — about money, people, markets, or myself?</div>
+        <textarea class="j-textarea" id="q3" placeholder="Every day should add something to your knowledge base..."></textarea>
+      </div>
+      <div class="j-question-block">
+        <div class="j-question"><div class="j-q-num">4</div> What am I grateful for today? (List 3. Don't skip this.)</div>
+        <textarea class="j-textarea" id="q4" placeholder="Gratitude is the foundation of abundance. Even on hard days, there's something."></textarea>
+      </div>
+      <div class="j-question-block">
+        <div class="j-question"><div class="j-q-num">5</div> What does tomorrow's version of me need to do first thing in the morning?</div>
+        <textarea class="j-textarea" id="q5" placeholder="Set tomorrow's intention tonight. Your future self is counting on you."></textarea>
+      </div>
+
+      <div class="j-mantra-block">
+        <div class="j-mantra-title">Tonight's Manifestation</div>
+        <div class="j-mantra-prompts">
+          <div class="j-mantra-item"><span class="j-mantra-dot">▸</span> Close your eyes. See yourself at 30 — $10M liquid, free, respected. Hold that image for 60 seconds before you sleep.</div>
+          <div class="j-mantra-item"><span class="j-mantra-dot">▸</span> Say out loud: <em style="color:var(--text)">"I am building something permanent. Every day I am closer. I will not stop."</em></div>
+          <div class="j-mantra-item"><span class="j-mantra-dot">▸</span> Write one sentence below — what you're calling into your life right now.</div>
+        </div>
+        <textarea class="j-textarea" id="q6" style="margin-top:14px;min-height:60px;" placeholder="I am calling in... (speak it like it already exists)"></textarea>
+      </div>
+
+      <div class="j-save-row">
+        <button class="j-save-btn" onclick="saveEntry()">Save Entry</button>
+        <div class="j-saved-msg" id="saved-msg">✓ Saved to your journal</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAST ENTRIES -->
+  <div class="j-panel" id="tab-past">
+    <div id="past-entries-list"></div>
+  </div>
+
+  <!-- MANIFESTATION -->
+  <div class="j-panel" id="tab-manifest">
+    <div class="manifest-card">
+      <div class="manifest-title">Your $10M Vision — Written</div>
+      <div class="manifest-sub">These are your non-negotiables. The life you are building. Read them every morning. Rewrite them every month. The more specific, the more real it becomes in your mind — and then in your life.</div>
+      <div class="manifest-affirmations" id="manifest-list"></div>
+      <button class="j-save-btn" style="margin-top:1.5rem;" onclick="saveManifest()">Save Vision</button>
+      <div class="j-saved-msg" id="manifest-saved" style="margin-top:8px;display:block;opacity:0;">✓ Vision saved</div>
+    </div>
+    <div class="manifest-card" style="margin-top:12px;">
+      <div class="manifest-title">Daily Affirmations</div>
+      <div class="manifest-sub">Read these out loud every morning. Your subconscious doesn't know the difference between now and the future — so speak in present tense.</div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div class="j-mantra-item"><span class="j-mantra-dot" style="color:var(--gold);">▸</span><span style="font-size:14px;color:var(--text);line-height:1.7;">"I am a multi-millionaire in training. Every decision I make reflects that."</span></div>
+        <div class="j-mantra-item"><span class="j-mantra-dot" style="color:var(--gold);">▸</span><span style="font-size:14px;color:var(--text);line-height:1.7;">"Money flows to me because I provide value and operate with discipline."</span></div>
+        <div class="j-mantra-item"><span class="j-mantra-dot" style="color:var(--gold);">▸</span><span style="font-size:14px;color:var(--text);line-height:1.7;">"I am building 5 vehicles simultaneously. Each one feeds the others."</span></div>
+        <div class="j-mantra-item"><span class="j-mantra-dot" style="color:var(--gold);">▸</span><span style="font-size:14px;color:var(--text);line-height:1.7;">"I will have $10 million liquid before I turn 30. This is decided."</span></div>
+        <div class="j-mantra-item"><span class="j-mantra-dot" style="color:var(--gold);">▸</span><span style="font-size:14px;color:var(--text);line-height:1.7;">"I honor my family by becoming the version of myself they deserve."</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CALENDAR -->
+  <div class="j-panel" id="tab-calendar">
+    <div class="journal-card">
+      <div class="j-date-header">
+        <div class="j-date-label">Entry Streak</div>
+        <div class="j-streak">🔥 <span id="cal-streak">0</span> day streak</div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:8px;">
+        <div style="text-align:center;font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);">S</div>
+        <div style="text-align:center;font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);">M</div>
+        <div style="text-align:center;font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);">T</div>
+        <div style="text-align:center;font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);">W</div>
+        <div style="text-align:center;font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);">T</div>
+        <div style="text-align:center;font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);">F</div>
+        <div style="text-align:center;font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);">S</div>
+      </div>
+      <div class="j-cal-grid" id="cal-grid"></div>
+      <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);margin-top:1rem;">
+        <span style="display:inline-block;width:12px;height:12px;background:rgba(201,168,76,0.15);border:0.5px solid var(--gold-dim);border-radius:2px;margin-right:6px;vertical-align:middle;"></span>Entry logged
+        &nbsp;&nbsp;
+        <span style="display:inline-block;width:12px;height:12px;border:0.5px solid var(--gold);border-radius:2px;margin-right:6px;vertical-align:middle;"></span>Today
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CLOSING QUOTE -->
+<div class="big-quote">
+  <p>At 30, look back at this plan.<br><span style="color:var(--gold)">You executed.</span><br>Then write the next $100M chapter.</p>
+  <span style="display:block;margin-top:1.5rem;">— The Blueprint · Tony's Final Principle</span>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">The Blueprint</div>
+  <div class="footer-txt">Tony · $10M before 30 · Built with intention</div>
+  <div class="footer-txt" id="foot-date"></div>
+</footer>
+
+<script>
+document.getElementById('foot-date').textContent = new Date().getFullYear() + ' — In progress';
+
+const phases = [
+  {
+    cls: 'p1', label: 'Phase 1 — Lock In', range: '$0 → $5K · Age 15–17',
+    truth: 'This is where the discipline starts. Most won\'t. You will. Nobody becomes a millionaire without first mastering themselves.',
+    vehicles: [
+      { name: 'Trading', badge: 'skill-building', steps: [
+        'Pick ONE market: forex, crypto, or stocks. Not all three.',
+        'Paper trade daily — journal every trade: entry, exit, why, result',
+        'Study 1 strategy for 90 days before touching anything else',
+        'Learn: support & resistance, risk/reward, position sizing',
+        'Be consistently paper-profitable for 3 months before going live'
+      ]},
+      { name: 'Brand & Social', badge: 'start now', steps: [
+        'Pick 1 platform: TikTok or Instagram. Document the journey.',
+        'Post 3–5x per week. Consistency beats quality at the start.',
+        'Document everything — trading, mindset, wins, lessons',
+        'Hit 1,000 followers before you turn 17'
+      ]},
+      { name: 'Marketing', badge: 'fundamentals', steps: [
+        'Learn digital marketing: SEO, paid ads, funnels, copywriting',
+        'Complete free courses: Google Digital Garage, Meta Blueprint',
+        'Identify 1 skill to offer: content creation, video editing, ads',
+        'Land your first paid client — even $100 changes your mindset'
+      ]},
+      { name: 'Mindset', badge: 'non-negotiable', steps: [
+        'Read: Atomic Habits, Psychology of Money, Rich Dad Poor Dad',
+        'No broke mindset — study wealth, talk to people building it',
+        'Weekly review every Sunday: what did I build, what did I waste?'
+      ]}
+    ]
+  },
+  {
+    cls: 'p2', label: 'Phase 2 — First Real Money', range: '$5K → $100K · Age 18–20',
+    truth: 'This is where most people get distracted. College parties, new freedom, comfort. You treat this era like a second job — because it is.',
+    vehicles: [
+      { name: 'Trading', badge: 'go live', steps: [
+        'Open live account — start $500–$1K, protect capital above all',
+        'Apply for prop firm once profitable (FTMO, etc.) — $100K+ accounts',
+        'Risk no more than 1–2% per trade. Blown accounts kill momentum.',
+        'Target: $2,000–$5,000/month from trading by 19',
+        'Reinvest all profits — zero lifestyle inflation'
+      ]},
+      { name: 'Agency', badge: 'first business', steps: [
+        'Launch lean SMMA — no office, no employees yet',
+        'Niche down: ONE industry (restaurants, fitness, real estate)',
+        'Land 3 retainer clients at $1K–$2K/month = $3K–$6K/month',
+        'Use cash to fund trading account and investments',
+        'Grow to 5 clients, hire contractor — you focus on sales only'
+      ]},
+      { name: 'Social Media', badge: 'monetize', steps: [
+        'Hit 10K followers, apply for brand deals in finance/lifestyle',
+        'Launch digital product: trading journal, mini course, ebook ($27–$97)',
+        'Affiliate marketing: promote tools you use, earn commission',
+        'Target: $1,000–$3,000/month from social by 20'
+      ]},
+      { name: 'Investing', badge: 'build the base', steps: [
+        'Open Roth IRA and max it every year — tax-free growth cheat code',
+        'Invest 20% of every dollar into index funds (VOO, QQQ)',
+        'Don\'t touch it. Let compound interest work.',
+        'Target: $25,000 invested by 20'
+      ]}
+    ]
+  },
+  {
+    cls: 'p3', label: 'Phase 3 — Scale Everything', range: '$100K → $1M · Age 21–24',
+    truth: 'The jump from $100K to $1M is a systems game. You can\'t hustle your way to a million — you build machines that run without you.',
+    vehicles: [
+      { name: 'Trading', badge: 'compound hard', steps: [
+        'Scale prop firm accounts — multiple firms, larger allocations',
+        'Develop or license a systematic trading strategy',
+        'Target: $10,000–$30,000/month from trading alone',
+        'Start paid trading community if track record is solid',
+        'Never risk core capital — protect it like it\'s already $10M'
+      ]},
+      { name: 'Agency / Business', badge: 'scale or sell', steps: [
+        'Scale agency to $30K–$50K/month with a team',
+        'Pivot option: SaaS product, course platform, or consulting brand',
+        'Hire ops manager — your job is vision, not execution',
+        'Target: business generating $500K+/year by 23',
+        'Sell agency at 2–4x annual revenue if right offer comes'
+      ]},
+      { name: 'Brand', badge: 'authority mode', steps: [
+        'Hit 100,000 followers across all platforms',
+        'Launch paid community, course, or mastermind ($500–$5,000)',
+        'Speaking, partnerships, equity deals come to you at this level',
+        'Target: $10,000–$50,000/month from brand alone'
+      ]},
+      { name: 'Real Estate', badge: 'enter the game', steps: [
+        'Buy first property — house hack (live in one unit, rent others)',
+        'Or: short-term rental (Airbnb) in high-demand market',
+        'Use business and trading profits as down payment',
+        'Target: 2–3 properties generating $5K–$10K/month passive by 24'
+      ]}
+    ]
+  },
+  {
+    cls: 'p4', label: 'Phase 4 — $1M to $10M', range: '$1M → $10M Liquid · Age 25–29',
+    truth: 'At this level the game changes. You stop trading time for money entirely. Capital works for you. Your name opens doors. You are the asset.',
+    vehicles: [
+      { name: 'Trading & Capital', badge: 'institutional', steps: [
+        'Manage $1M+ personal trading account with proven system',
+        'Consider launching a hedge fund or private investment vehicle',
+        '20–40% annual return on $1M = $200K–$400K/year from trading',
+        'Bring in outside capital — management + performance fees'
+      ]},
+      { name: 'Business Empire', badge: 'portfolio', steps: [
+        'Own 2–3 businesses or equity stakes — not just one',
+        'Acquire underperforming businesses with capital, turn them',
+        'Agency, brand, products run without you by 27',
+        'Target: $500K–$2M/year in passive business income'
+      ]},
+      { name: 'Real Estate', badge: 'portfolio scale', steps: [
+        'Own $2M–$5M in real estate, generating $20K–$40K/month',
+        'Property manager handles it — you manage assets, not toilets',
+        '1031 exchanges to defer taxes and compound wealth',
+        'Consider commercial real estate at this level'
+      ]},
+      { name: 'Brand & Legacy', badge: 'the name is worth millions', steps: [
+        '500K–1M+ followers. Brand generates 7 figures alone.',
+        'In rooms with the people you used to watch on YouTube',
+        'Launch a foundation, fund young entrepreneurs',
+        'At 30: look back at this plan. You executed. Write the next chapter.'
+      ]}
+    ]
+  }
+];
+
+let checked = {};
+let total = 0;
+phases.forEach((p,pi) => p.vehicles.forEach((v,vi) => v.steps.forEach((_,si) => total++));
+
+function updateProgress() {
+  const done = Object.values(checked).filter(Boolean).length;
+  const pct = Math.round((done/total)*100);
+  document.getElementById('pfill').style.width = pct+'%';
+  document.getElementById('pct').textContent = pct+'%';
+}
+
+const wrap = document.getElementById('phases-wrap');
+phases.forEach((phase, pi) => {
+  const card = document.createElement('div');
+  card.className = `phase-card ${phase.cls}`;
+
+  const head = document.createElement('div');
+  head.className = 'phase-head';
+  head.innerHTML = `
+    <div class="phase-left">
+      <div>
+        <div class="phase-tag">Phase ${pi+1}</div>
+        <div class="phase-name">${phase.label.replace(/Phase \d+ — /,'')}</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <div class="phase-range">${phase.range}</div>
+      <div class="phase-toggle" id="tog-${pi}">+</div>
+    </div>
+  `;
+
+  const body = document.createElement('div');
+  body.className = 'phase-body' + (pi===0?' open':'');
+  body.id = `pbody-${pi}`;
+
+  const truth = document.createElement('div');
+  truth.className = 'phase-truth';
+  truth.textContent = phase.truth;
+  body.appendChild(truth);
+
+  const vGrid = document.createElement('div');
+  vGrid.className = 'vehicle-grid';
+
+  phase.vehicles.forEach((v, vi) => {
+    const vCard = document.createElement('div');
+    vCard.className = 'vehicle';
+    const vHead = document.createElement('div');
+    vHead.className = 'v-name';
+    vHead.innerHTML = `${v.name} <span class="v-badge">${v.badge}</span>`;
+    vCard.appendChild(vHead);
+
+    const ul = document.createElement('ul');
+    ul.className = 'v-steps';
+    v.steps.forEach((s,si) => {
+      const key = `${pi}-${vi}-${si}`;
+      const li = document.createElement('li');
+      li.className = 'v-step';
+      li.innerHTML = `<div class="v-chk" id="vc-${key}"></div><div class="step-txt">${s}</div>`;
+      li.addEventListener('click', () => {
+        checked[key] = !checked[key];
+        document.getElementById(`vc-${key}`).classList.toggle('on', checked[key]);
+        li.classList.toggle('done', checked[key]);
+        updateProgress();
+      });
+      ul.appendChild(li);
+    });
+    vCard.appendChild(ul);
+    vGrid.appendChild(vCard);
+  });
+
+  body.appendChild(vGrid);
+
+  head.addEventListener('click', () => {
+    const isOpen = body.classList.toggle('open');
+    const tog = document.getElementById(`tog-${pi}`);
+    tog.textContent = isOpen ? '−' : '+';
+    tog.classList.toggle('open', isOpen);
+  });
+
+  card.appendChild(head);
+  card.appendChild(body);
+  wrap.appendChild(card);
+});
+
+updateProgress();
+
+// ---- JOURNAL ----
+function switchTab(name) {
+  document.querySelectorAll('.j-tab').forEach((t,i) => {
+    const names = ['today','past','manifest','calendar'];
+    t.classList.toggle('active', names[i] === name);
+  });
+  document.querySelectorAll('.j-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  if (name === 'past') renderPast();
+  if (name === 'calendar') renderCalendar();
+  if (name === 'manifest') renderManifest();
+}
+
+// Date helpers
+function todayKey() {
+  const d = new Date();
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+}
+function formatDate(key) {
+  const [y,m,d] = key.split('-');
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return months[parseInt(m)-1] + ' ' + parseInt(d) + ', ' + y;
+}
+
+// Set today's date in header
+const todayLabel = document.getElementById('today-date');
+if (todayLabel) todayLabel.textContent = formatDate(todayKey());
+
+// Storage helpers
+function getEntries() {
+  try { return JSON.parse(localStorage.getItem('bp_journal') || '{}'); } catch(e) { return {}; }
+}
+function saveEntries(obj) {
+  try { localStorage.setItem('bp_journal', JSON.stringify(obj)); } catch(e) {}
+}
+function getManifestData() {
+  try { return JSON.parse(localStorage.getItem('bp_manifest') || '[]'); } catch(e) { return []; }
+}
+function saveManifestData(arr) {
+  try { localStorage.setItem('bp_manifest', JSON.stringify(arr)); } catch(e) {}
+}
+
+// Mood
+let selectedMood = '';
+function selectMood(el, mood) {
+  document.querySelectorAll('.j-mood-btn').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedMood = mood;
+}
+
+// Streak calculation
+function calcStreak() {
+  const entries = getEntries();
+  const keys = Object.keys(entries).sort().reverse();
+  if (!keys.length) return 0;
+  let streak = 0;
+  let check = new Date();
+  for (let i = 0; i < 365; i++) {
+    const k = check.getFullYear()+'-'+String(check.getMonth()+1).padStart(2,'0')+'-'+String(check.getDate()).padStart(2,'0');
+    if (entries[k]) { streak++; check.setDate(check.getDate()-1); }
+    else if (i === 0) { check.setDate(check.getDate()-1); }
+    else break;
+  }
+  return streak;
+}
+
+function updateStreakDisplay() {
+  const s = calcStreak();
+  const el = document.getElementById('streak-count');
+  const el2 = document.getElementById('cal-streak');
+  if (el) el.textContent = s;
+  if (el2) el2.textContent = s;
+}
+updateStreakDisplay();
+
+// Load today's saved entry if exists
+(function loadToday() {
+  const entries = getEntries();
+  const key = todayKey();
+  if (entries[key]) {
+    const e = entries[key];
+    ['q1','q2','q3','q4','q5','q6'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el && e[id]) el.value = e[id];
+    });
+    if (e.mood) {
+      document.querySelectorAll('.j-mood-btn').forEach(btn => {
+        if (btn.textContent.trim() === e.mood) { btn.classList.add('selected'); selectedMood = e.mood; }
+      });
+    }
+  }
+})();
+
+// Save entry
+function saveEntry() {
+  const entries = getEntries();
+  const key = todayKey();
+  entries[key] = {
+    mood: selectedMood,
+    q1: document.getElementById('q1').value,
+    q2: document.getElementById('q2').value,
+    q3: document.getElementById('q3').value,
+    q4: document.getElementById('q4').value,
+    q5: document.getElementById('q5').value,
+    q6: document.getElementById('q6').value,
+    ts: Date.now()
+  };
+  saveEntries(entries);
+  updateStreakDisplay();
+  const msg = document.getElementById('saved-msg');
+  msg.classList.add('show');
+  setTimeout(() => msg.classList.remove('show'), 3000);
+}
+
+// Render past entries
+function renderPast() {
+  const entries = getEntries();
+  const keys = Object.keys(entries).sort().reverse();
+  const container = document.getElementById('past-entries-list');
+  if (!keys.length) {
+    container.innerHTML = '<div class="j-empty">No entries yet. Start journaling tonight.</div>';
+    return;
+  }
+  container.innerHTML = '';
+  keys.forEach(key => {
+    const e = entries[key];
+    const card = document.createElement('div');
+    card.className = 'j-entry-card';
+    const preview = e.q1 ? e.q1.substring(0, 100) + (e.q1.length > 100 ? '...' : '') : 'No entry text';
+    card.innerHTML = `
+      <div class="j-entry-header">
+        <div class="j-entry-date">${formatDate(key)}</div>
+        <div class="j-entry-mood">${e.mood || '—'}</div>
+      </div>
+      <div class="j-entry-preview">${preview}</div>
+    `;
+    card.addEventListener('click', () => showFullEntry(key, e));
+    container.appendChild(card);
+  });
+}
+
+function showFullEntry(key, e) {
+  const container = document.getElementById('past-entries-list');
+  const questions = [
+    'What moved me closer to $10M today?',
+    'Where did I waste time or energy?',
+    'What did I learn today?',
+    'What am I grateful for?',
+    "Tomorrow's first move",
+    'Manifestation'
+  ];
+  const answers = [e.q1, e.q2, e.q3, e.q4, e.q5, e.q6];
+  let html = `<div class="journal-card">
+    <div class="j-date-header">
+      <div class="j-date-label">${formatDate(key)}</div>
+      <div class="j-streak">${e.mood || ''}</div>
+    </div>`;
+  questions.forEach((q, i) => {
+    if (answers[i]) html += `
+      <div class="j-question-block">
+        <div class="j-question" style="margin-bottom:6px;"><div class="j-q-num">${i+1}</div> ${q}</div>
+        <div style="font-size:14px;color:var(--text);line-height:1.7;padding:10px 12px;background:var(--black);border:0.5px solid var(--border);border-radius:4px;">${answers[i]}</div>
+      </div>`;
+  });
+  html += `<button class="j-save-btn" onclick="renderPast()" style="margin-top:1rem;">← Back to entries</button></div>`;
+  container.innerHTML = html;
+}
+
+// Manifestation
+const manifestPrompts = [
+  'I am worth $10,000,000 because...',
+  'By age 30, I will have...',
+  'My trading account will reach...',
+  'My family will never worry about money because...',
+  'I wake up every day knowing...',
+  'The version of me at 30 looks like...',
+  'I am grateful in advance for...'
+];
+function renderManifest() {
+  const saved = getManifestData();
+  const list = document.getElementById('manifest-list');
+  list.innerHTML = '';
+  manifestPrompts.forEach((prompt, i) => {
+    const row = document.createElement('div');
+    row.className = 'manifest-item';
+    row.innerHTML = `
+      <div class="manifest-num">${String(i+1).padStart(2,'0')}</div>
+      <div style="flex:1;">
+        <div style="font-size:11px;font-family:'DM Mono',monospace;color:var(--gold-dim);letter-spacing:0.08em;margin-bottom:4px;text-transform:uppercase;">${prompt}</div>
+        <input class="manifest-input" id="mv-${i}" value="${saved[i] || ''}" placeholder="Write it in present tense, as if it's already real...">
+      </div>`;
+    list.appendChild(row);
+  });
+}
+function saveManifest() {
+  const data = manifestPrompts.map((_,i) => {
+    const el = document.getElementById('mv-'+i);
+    return el ? el.value : '';
+  });
+  saveManifestData(data);
+  const msg = document.getElementById('manifest-saved');
+  msg.style.opacity = '1';
+  setTimeout(() => msg.style.opacity = '0', 2500);
+}
+
+// Calendar
+function renderCalendar() {
+  const entries = getEntries();
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth();
+  const label = document.getElementById('cal-month-label');
+  if (label) label.textContent = new Date(year, month, 1).toLocaleString('default',{month:'long',year:'numeric'}).toUpperCase();
+  const grid = document.getElementById('cal-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  const first = new Date(year, month, 1).getDay();
+  const days = new Date(year, month+1, 0).getDate();
+  for (let i = 0; i < first; i++) {
+    const blank = document.createElement('div');
+    grid.appendChild(blank);
+  }
+  for (let d = 1; d <= days; d++) {
+    const key = year+'-'+String(month+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+    const isToday = d === now.getDate();
+    const hasEntry = !!entries[key];
+    const cell = document.createElement('div');
+    cell.className = 'j-cal-day' + (hasEntry?' has-entry':'') + (isToday?' today':'');
+    cell.textContent = d;
+    grid.appendChild(cell);
+  }
+  updateStreakDisplay();
+}
+</script>
+</body>
+</html>
